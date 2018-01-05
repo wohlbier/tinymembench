@@ -426,7 +426,18 @@ int latency_bench(int size, int count, int use_hugepage)
     else
         printf("\n");
 
-    for (nbits = 10; (1 << nbits) <= size; nbits++)
+#ifdef __TAU_MANUAL_INST__
+#include <Profile/Profiler.h>
+    TAU_PROFILE_TIMER(tautimer, "latency_bench [{main.c}]", " ", TAU_USER);
+    TAU_PROFILE_START(tautimer);
+#endif
+
+    //jgw//for (nbits = 10; (1 << nbits) <= size; nbits++)
+    //nbits = 14; //    16384 // L1
+    //nbits = 17; //   131072 // L2
+    nbits = 21; //  2097152 // L3
+    //nbits = 25; // 33554432 // DDR
+    //nbits = 26; // 67108864 // NUMA boundary?
     {
         int testsize = 1 << nbits;
         xs1 = xs2 = ys = ys1 = ys2 = 0;
@@ -476,6 +487,12 @@ int latency_bench(int size, int count, int use_hugepage)
         printf("%10d : %6.1f ns          /  %6.1f ns \n", (1 << nbits),
             min_t * 1000000000. / count,  min_t2 * 1000000000. / count);
     }
+
+#ifdef __TAU_MANUAL_INST__
+    TAU_PROFILE_STOP(tautimer)
+#endif
+
+
     free(buffer_alloc);
     return 1;
 }
@@ -499,6 +516,7 @@ int main(void)
                                             (void **)&dstbuf, bufsize,
                                             (void **)&tmpbuf, BLOCKSIZE,
                                             NULL, 0);
+#if 0 //jgw
     printf("\n");
     printf("==========================================================================\n");
     printf("== Memory bandwidth tests                                               ==\n");
@@ -554,6 +572,7 @@ int main(void)
         bandwidth_bench(dstbuf, srcbuf, tmpbuf, bufsize, BLOCKSIZE, " ", bi);
     }
 #endif
+#endif //jgw
 
     free(poolbuf);
 
@@ -579,11 +598,14 @@ int main(void)
     printf("==         single reads performed one after another.                    ==\n");
     printf("==========================================================================\n");
 
+#if 0 //jgw
     if (!latency_bench(latbench_size, latbench_count, -1) ||
         !latency_bench(latbench_size, latbench_count, 1))
     {
         latency_bench(latbench_size, latbench_count, 0);
     }
+#endif //jgw
+    latency_bench(latbench_size, latbench_count, 0);
 
     return 0;
 }
