@@ -81,3 +81,13 @@ PAPI_NATIVE:OFFCORE_REQUESTS_BUFFER:SQ_FULL:cpu=0
 #         => Memory bound cycles - Bandwidth bound cycles
 #     Other stall reason cycles:
 #         => Stall cycles - Memory bound stall cycles
+
+
+# nbits = 21 // L3
+# CPU_CLK_UNHALTED :   1.48e10
+# CYCLES_NO_EXECUTE:   1.11e10 (75% cycles are stalled)
+# RESOURCE_STALLS:SB:  7.74e 3
+# STALLS_L1D_PENDING:  7.97e 9 (72% of stalled cycles are memory bound)
+# FB_FULL + SQ_FULL:   1.58e 2
+# max(SB, FB_FULL + SQ_FULL): 7.7e3 (number of cycles bandwidth bound)
+# latency_bound = memory bound - bandwidth bound = 7.97e9 - 7.7e3 ~8e9

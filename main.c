@@ -435,8 +435,8 @@ int latency_bench(int size, int count, int use_hugepage)
     //jgw//for (nbits = 10; (1 << nbits) <= size; nbits++)
     //nbits = 14; //    16384 // L1
     //nbits = 17; //   131072 // L2
-    nbits = 21; //  2097152 // L3
-    //nbits = 25; // 33554432 // DDR
+    //nbits = 21; //  2097152 // L3
+    nbits = 25; // 33554432 // DDR
     //nbits = 26; // 67108864 // NUMA boundary?
     {
         int testsize = 1 << nbits;
