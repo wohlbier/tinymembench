@@ -91,3 +91,12 @@ PAPI_NATIVE:OFFCORE_REQUESTS_BUFFER:SQ_FULL:cpu=0
 # FB_FULL + SQ_FULL:   1.58e 2
 # max(SB, FB_FULL + SQ_FULL): 7.7e3 (number of cycles bandwidth bound)
 # latency_bound = memory bound - bandwidth bound = 7.97e9 - 7.7e3 ~8e9
+
+# nbits = 25 // DDR
+# CPU_CLK_UNHALTED :   1.95e10
+# CYCLES_NO_EXECUTE:   1.57e10 (80% cycles are stalled)
+# RESOURCE_STALLS:SB:  7.92e 3
+# STALLS_L1D_PENDING:  1.14e10 (73% of stalled cycles are memory bound)
+# FB_FULL + SQ_FULL:   3.11e 2
+# max(SB, FB_FULL + SQ_FULL):  7.92e 3 (number of cycles bandwidth bound)
+# latency_bound = memory bound - bandwidth bound = 1.14e10 - 7.92e3 ~ 1.14e10
